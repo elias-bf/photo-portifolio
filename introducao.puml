@@ -1,0 +1,16 @@
+@startuml Caso de Uso
+left to right direction
+rectangle Pedidos{
+    usecase (Realizar Venda) as venda
+    usecase (Registar Pagamento) as uc_pag
+    usecase (Informar Entrega) as inf_ent
+}
+
+actor Cliente as c
+actor Vendedor as v
+
+c --> uc_pag
+c --> inf_ent
+v --> venda
+
+@enduml

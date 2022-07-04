@@ -1,0 +1,31 @@
+@startuml "Architecture SUAP"
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Person(personUsers, "Publico em Geral", "Qualquer pessoa interessada em acessar os processos da CMG")
+ContainerDb(suap_db_prod, "Banco de Dados", "SGBD PostgreSQL", "Armazenas processos e suas tramitações")
+
+System_Boundary(suap, "Andamento de processos") {
+    Component(suap_adm, "Módulo Administrativo", "Python+Django", "Processos administrativos")
+    Component(suap_pessoas, "Pessoas", "Python+Django", "Gestão de Pessoas")
+    Component(suap_leg, "Módulo Legislativo", "Python+Django", "Processos legislativos")
+    Component(suap_doc_eletronic, "Documento Eletrônico", "Python+Django", "Documentos Eletrônicos")
+}
+Rel_D(personUsers, suap_adm, "usa", "")
+Rel_D(personUsers, suap_leg, "usa", "")
+Rel_D(personUsers, suap_pessoas, "usa", "")
+
+Rel_R(suap_adm, suap_pessoas, "usa", "")
+Rel_L(suap_leg, suap_pessoas, "usa", "")
+
+Lay_D(suap_pessoas, suap_doc_eletronic)
+Rel(suap_adm, suap_doc_eletronic, "usa", "")
+Rel(suap_leg, suap_doc_eletronic, "usa", "")
+
+
+Rel(suap_adm, suap_db_prod, "ler e escrever", "pyodbc")
+Rel(suap_leg, suap_db_prod, "ler e escrever", "pyodbc")
+Lay_D(suap, suap_db_prod)
+
+@enduml
+
+

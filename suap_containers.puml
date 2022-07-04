@@ -1,0 +1,18 @@
+@startuml "Architecture SUAP"
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(personUsers, "Publico em Geral", "Qualquer pessoa interessada em acessar os processos da CMG")
+System(systemDiginotas, "Diginotas", "Digitalização dos processos")
+
+System_Boundary(suap, "Andamento de processos", "") {
+    Container(suap_web_app, "Web Application", "Python+Django", "Automação de processos")
+    ContainerDb(suap_db_prod, "Banco de Dados", "SGBD PostgreSQL", "Armazenas processos e suas tramitações")
+    Rel_R(suap_web_app, suap_db_prod, "Gravar e consultas processos","pyodbc")
+}
+Rel_D(personUsers, suap_web_app, "Usa", "")
+Rel_D(suap_web_app, systemDiginotas, "busca processos que foram digitalizados", "http")
+
+
+@enduml
+
+

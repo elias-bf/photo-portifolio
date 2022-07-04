@@ -1,0 +1,14 @@
+@startuml "Architecture SUAP"
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person(personUsers, "Publico em Geral", "Qualquer pessoa interessada em acessar os processos da CMG")
+System(systemSuap, "SUAP", "Software para controle de processos legislativos e administrativos que permeiam o dia-a-dia da Câmara")
+System(systemDiginotas, "Diginotas", "Digitalização dos processos")
+
+Rel(personUsers, systemSuap, "Registra/consulta processos", "")
+Rel_R(systemSuap, systemDiginotas, "http", "")
+
+
+@enduml
+
+
